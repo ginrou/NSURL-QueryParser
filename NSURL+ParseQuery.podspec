@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.author       = { "Yuichi Takeda" => "ginrou799@gmail.com" }
 
   s.platform     = :ios
-  s.source       = { :git => "https://github.com/ginrou/NSURL-QueryParser.git", :commit => "bd55d0b9a220c8ba1570d5194908424533cc3a4c" }
+  s.source       = { :git => "https://github.com/ginrou/NSURL-QueryParser.git", :commit => "99b0f24885e0633b123f3fe227552c873b86b49b" }
 
   s.source_files  = 'Classes', 'Classes/**/*.{h,m}'
   s.exclude_files = 'Classes/Exclude'
