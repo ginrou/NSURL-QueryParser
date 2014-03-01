@@ -19,11 +19,52 @@
 - (void)testNormalPattern
 {
     NSURL *url = [NSURL URLWithString:@"http://example.com?k=v&1=2"];
+    NSDictionary *result = [url parseQuery];
+    NSDictionary *expected = @{@"k": @"v", @"1": @"2"};
+    XCTAssertEqualObjects(result, expected, @"normal case");
+}
+
+- (void)testWithoutQuery
+{
+    NSURL *url = [NSURL URLWithString:@"http://example.com"];
     NSDictionary *query = [url parseQuery];
+    XCTAssertEqualObjects(query, @{}, @"without query, returns empty Dict");
 
-    XCTAssertTrue([query[@"k"] isEqualToString:@"v"], @"test for k=v");
-    XCTAssertTrue([query[@"1"] isEqualToString:@"2"], @"test for 1=2");
+    url = [NSURL URLWithString:@"http://example.com?"];
+    query = [url parseQuery];
+    XCTAssertEqualObjects(query, @{}, @"without query, returns empty Dict");
 
+}
+
+- (void)testEmptyValue
+{
+    NSURL *url = [NSURL URLWithString:@"http://example.com?k=v&ihr="];
+    NSDictionary *query = [url parseQuery];
+    NSDictionary *expected = @{@"k": @"v", @"ihr": @""};
+    XCTAssertEqualObjects(query, expected, @"empty value case");
+}
+
+- (void)testEmptyKey
+{
+    NSURL *url = [NSURL URLWithString:@"http://example.com?k=v&=ihr"];
+    NSDictionary *query = [url parseQuery];
+    NSDictionary *expected = @{@"k": @"v"};
+    XCTAssertEqualObjects(query, expected, @"empty key is ignored");
+}
+
+- (void)testEmptyKeyAndValue
+{
+    NSURL *url = [NSURL URLWithString:@"http://example.com?k=v&="];
+    NSDictionary *query = [url parseQuery];
+    NSDictionary *expected = @{@"k": @"v"};
+    XCTAssertEqualObjects(query, expected, @"empty key is ignored");
+}
+
+- (void)testTwoQuestionMark
+{
+    NSURL *url = [NSURL URLWithString:@"http://example.com?k=v?k2=v2"];
+    NSDictionary *query = [url parseQuery];
+    XCTAssertEqualObjects(query, @{}, @"when with two question marks, result be empty");
 }
 
 @end

@@ -17,9 +17,14 @@
     for (NSString *keyValuePair in keyValuePairs) {
         NSArray *element = [keyValuePair componentsSeparatedByString:@"="];
 
-        if (element.count == 2) {
-            queryDict[element[0]] = element[1];
-        }
+        if (element.count != 2) continue;
+
+        NSString *key = element[0], *value = element[1];
+
+        if (key.length == 0) continue;
+
+        queryDict[key] = value;
+
 
     }
 
