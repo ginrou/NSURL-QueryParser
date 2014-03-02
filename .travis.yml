@@ -1,4 +1,4 @@
-languate: objective-c
+language: objective-c
 
 script:
   - cd Project && make test
