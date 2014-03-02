@@ -1,0 +1,4 @@
+languate: objective-c
+
+script:
+  - cd Project && make test
